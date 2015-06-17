@@ -1,0 +1,6 @@
+= spindash
+
+Describe your project here
+
+:include:spindash.rdoc
+

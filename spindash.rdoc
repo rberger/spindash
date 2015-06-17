@@ -1,0 +1,5 @@
+= spindash
+
+Generate this with
+    spindash rdoc
+After you have described your command line interface
