@@ -10,31 +10,32 @@ rescue LoadError
 end
 
 include GLI::App
+include Spindash
 
-program_desc 'Describe your application here'
+program_desc 'Setup and Rotate between Desktops on Ubuntu Unity'
 
 version Spindash::VERSION
 
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+desc 'Set output to verbose'
+switch [:V,:verbose]
+
+desc 'Do not actually do anything'
+switch [:n,:dry_run]
 
 desc 'Describe some flag here'
 default_value 'the default'
 arg_name 'The name of the argument'
 flag [:f,:flagname]
 
-desc 'Describe setup here'
-arg_name 'Describe arguments to setup here'
+desc 'Make sure all the expected apps are running in the expected workspaces'
+arg_name 'No Args yet'
 command :setup do |c|
   c.desc 'Describe a switch to setup'
   c.switch :s
 
-  c.desc 'Describe a flag to setup'
-  c.default_value 'default'
-  c.flag :f
   c.action do |global_options,options,args|
 
     # Your command logic here
@@ -42,14 +43,36 @@ command :setup do |c|
     # If you have any errors, just raise them
     # raise "that command made no sense"
 
-    puts "setup command ran"
+    puts "Setup doesn't do anything yet"
   end
 end
 
-desc 'Describe spin here'
-arg_name 'Describe arguments to spin here'
+desc 'Rotate the Workspaces'
+arg_name ''
 command :spin do |c|
+  c.desc 'Time in seconds between switching workspaces'
+  c.default_value 10
+  c.flag :time
+
+  c.desc 'Number of columns of workspaces on x axis'
+  c.default_value 2
+  c.flag :x_spaces
+
+  c.desc 'Number of rows of workspaces on y axis'
+  c.default_value 2
+  c.flag :y_spaces
+
+  c.desc 'Workspace width in pixels'
+  c.default_value 1920
+  c.flag :width
+  
+  c.desc 'Workspace hieght in pixels'
+  c.default_value 1080
+  c.flag :hieght
+  
   c.action do |global_options,options,args|
+    spinner = Spin.new(global_options.merge(options))
+    spinner.run
     puts "spin command ran"
   end
 end
